@@ -1,10 +1,9 @@
 
-fn main() {
-    let input = vec![String::from("flower"), String::from("flow"), String::from("flight")];
+pub fn longest_common_prefix(strs: Vec<String>) -> String {
     let mut result: Vec<char> = vec![];
     let mut last_valid_index: i8 = 0;
    
-    'rootLoop: for (i, elem) in input.iter().enumerate() {
+    'rootLoop: for (i, elem) in strs.iter().enumerate() {
         for (j, value) in elem.chars().enumerate() {
             let j_index = j as i8;
             if i == 0 {
@@ -30,21 +29,23 @@ fn main() {
             }
         }
     }
-    if last_valid_index < 0 {
-        println!("NOT_FOUND");
-        return;
-    }
     let mut output = String::from("");
 
+    if last_valid_index < 0 {
+        return output;
+    }
+    
     for (index, elem) in result.iter().enumerate() {
         if (index as i8) > last_valid_index {
             break;
         }
         output.push(*elem);
     }
-    println!("{:?}", output)
+    return output;
 }
 
-
-// Input: strs = ["flower","flow","flight"]
-// Output: "fl"
+fn main() {
+    let strs = vec![String::from("flower"), String::from("flow"), String::from("flight")];
+    let result = longest_common_prefix(strs);
+    println!("{:?}", result)
+}
