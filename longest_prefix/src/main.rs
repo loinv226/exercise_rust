@@ -5,7 +5,10 @@ pub fn longest_common_prefix(strs: Vec<String>) -> String {
     if let Some(first) = strs.get(0) {
         for (i, c) in first.chars().enumerate() {
             // loop other word
-            for other in strs.iter() {
+            for (j, other) in strs.iter().enumerate() {
+                if j == 0 {
+                    continue;
+                }
                 if other.len() <= i || c != other.chars().nth(i).unwrap() {
                     return output;
                 }
