@@ -1,26 +1,30 @@
+use std::time::Instant;
 
 pub fn longest_common_prefix(strs: Vec<String>) -> String {
-    let mut output = String::from("");
+    let mut prefix = String::from("");
 
     if let Some(first) = strs.get(0) {
-        for (i, c) in first.chars().enumerate() {
+        // let mut i = 0;
+        for c in first.chars() {
+            // println!("{:?}", i);
+            // i += 1;
+            prefix.push(c);
             // loop other word
-            for (j, other) in strs.iter().enumerate() {
-                if j == 0 {
-                    continue;
-                }
-                if other.len() <= i || c != other.chars().nth(i).unwrap() {
-                    return output;
-                }
+            if strs.iter().any(|x| x.find(&prefix) != Some(0)) {
+                prefix.pop();
+                return prefix;
             }
-            output.push(c);
         }
     }
-    return output;
+    return prefix;
 }
 
 fn main() {
     let strs = vec![String::from("flower"), String::from("flow"), String::from("flight")];
+    // let strs = vec!["a".repeat(1000); 1000];
+    let now = Instant::now();
     let result = longest_common_prefix(strs);
+    let dur = now.elapsed();
+    println!("dur: {:.2?}", dur);
     println!("{:?}", result)
 }
