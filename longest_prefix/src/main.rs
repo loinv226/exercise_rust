@@ -1,30 +1,29 @@
 use std::time::Instant;
+use std::cmp;
 
-pub fn longest_common_prefix(strs: Vec<String>) -> String {
-    let mut prefix = String::from("");
+mod config;
+mod loi;
+mod thanh;
 
-    if let Some(first) = strs.get(0) {
-        // let mut i = 0;
-        for c in first.chars() {
-            // println!("{:?}", i);
-            // i += 1;
-            prefix.push(c);
-            // loop other word
-            if strs.iter().any(|x| x.find(&prefix) != Some(0)) {
-                prefix.pop();
-                return prefix;
-            }
-        }
-    }
-    return prefix;
-}
+use config::*;
 
 fn main() {
-    let strs = vec![String::from("flower"), String::from("flow"), String::from("flight")];
-    // let strs = vec!["a".repeat(1000); 1000];
+    // let strs = vec![String::from("flower"), String::from("flow"), String::from("flight")];
+    let strs = vec!["a".repeat(1000); 1000];
     let now = Instant::now();
-    let result = longest_common_prefix(strs);
+    
+    match YOUR_CHOOSE {
+        Choose::Loi => {
+            let result = loi::longest_common_prefix(strs);
+            println!("{:?}", result);
+        }
+        Choose::Thanh => {
+            let result = thanh::longest_common_prefix(strs);
+            println!("{:?}", result);
+        }
+    }
+    
     let dur = now.elapsed();
     println!("dur: {:.2?}", dur);
-    println!("{:?}", result)
+    
 }
