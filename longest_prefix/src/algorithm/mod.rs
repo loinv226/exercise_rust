@@ -1,5 +1,7 @@
 pub mod linear;
 pub mod fibonacci;
+pub mod binary;
+pub mod exponential;
 
 use std::time::{Instant, Duration};
 use std::cmp::Eq;
@@ -14,7 +16,7 @@ pub struct Algorithm<R> {
 }
 
 impl<R> Debug for Algorithm<R>
-where R: Eq {
+where R: Eq + Debug {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         f.debug_struct("Member")
          .field("name", &self.name)
@@ -25,7 +27,7 @@ where R: Eq {
 }
 
 impl<R> Algorithm<R>
-where R: Eq {
+where R: Eq + Debug {
     pub fn init<F>(name: String, excute: F, expect: R) -> Algorithm<R> where F: Fn() -> R + 'static {
         Algorithm {
             name,
@@ -40,10 +42,11 @@ where R: Eq {
         let now = Instant::now();
         let result = (self.excute)();
         let dur = now.elapsed();
-        println!("Mem: {:?} - dur: {:.2?}", self.name, dur);
+        // println!("Result: {:?}", result);
         self.time = dur;
         if self.expect == result {
             self.valid = true;
         }
+        println!("Algorithm: {:?} Valid: {:?} - dur: {:.2?}", self.name, self.valid, dur);
     }
 }

@@ -3,15 +3,9 @@ use std::cmp;
 fn common_prefix_of_two(left: &String, right: &String) -> String {
     let min_length = cmp::min(left.len(), right.len());
     for i in 0..min_length {
-        // if left.chars().nth(i).unwrap() != right.chars().nth(i).unwrap() {
-        //     return left[0..i].to_string();
-        // }
-        
         if &left[i..i+1] != &right[i..i+1] {
             return left[0..i].to_string();
         }
-        
-        
     }
     left[0..min_length].to_string()
 }
